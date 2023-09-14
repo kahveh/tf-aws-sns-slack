@@ -20,6 +20,7 @@ import boto3
 REGION = os.environ.get("AWS_REGION", "us-east-1")
 KMS_CLIENT = boto3.client("kms", region_name=REGION)
 
+
 def decrypt_url(encrypted_url: str) -> str:
     """Decrypt encrypted URL with KMS
 
@@ -37,7 +38,7 @@ def decrypt_url(encrypted_url: str) -> str:
 
 
 def format_default(
-        message: Union[str, Dict], subject: Optional[str] = None
+    message: Union[str, Dict], subject: Optional[str] = None
 ) -> Dict[str, Any]:
     """
     Default formatter, converting event into Slack message format
@@ -68,7 +69,7 @@ def format_default(
 
 
 def get_slack_message_payload(
-        message: Union[str, Dict], region: str, subject: Optional[str] = None
+    message: Union[str, Dict], region: str, subject: Optional[str] = None
 ) -> Dict:
     """
     Parse notification message and format into Slack message payload
@@ -103,7 +104,7 @@ def get_slack_message_payload(
         attachment = notification
 
     elif (
-            isinstance(message, Dict) and message.get("detail-type") == "GuardDuty Finding"
+        isinstance(message, Dict) and message.get("detail-type") == "GuardDuty Finding"
     ):
         notification = GuardDutyFinding.format(
             message=message, region=message["region"]

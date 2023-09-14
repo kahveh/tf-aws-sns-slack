@@ -18,7 +18,7 @@ class AwsService(Enum):
         """
         try:
             service_name = AwsService[service].value
-            if service_name is "awshealth":
+            if service_name == "awshealth":
                 return f"https://phd.aws.amazon.com/phd/home?region={region}#/dashboard/open-issues"
 
             if region.startswith("us-gov-"):

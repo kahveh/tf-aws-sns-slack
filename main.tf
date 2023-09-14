@@ -4,7 +4,7 @@ data "aws_region" "current" {}
 
 locals {
   sns_topic_arn        = var.sns_topic_arn
-  lambda_function_name = var.lambda_function_name || "sns-notify-slack"
+  lambda_function_name = try(var.lambda_function_name, "sns-notify-slack")
   lambda_handler       = try(split(".", basename(var.lambda_source_path))[0], "notify_slack")
 
   lambda_policy_document = {
@@ -63,9 +63,9 @@ module "lambda" {
   description   = var.lambda_description
 
   handler                        = "${local.lambda_handler}.lambda_handler"
-  source_path                    = var.lambda_source_path != null ? "${path.root}/${var.lambda_source_path}" : "${path.module}/functions/notify_slack.py"
+  source_path                    = var.lambda_source_path != null ? "${path.root}/${var.lambda_source_path}" : "${path.module}/lambda"
   recreate_missing_package       = var.recreate_missing_package
-  runtime                        = "python3.8"
+  runtime                        = "python3.11"
   timeout                        = 30
   kms_key_arn                    = var.kms_key_arn
   reserved_concurrent_executions = var.reserved_concurrent_executions

@@ -38,11 +38,6 @@ variable "lambda_attach_dead_letter_policy" {
   default     = false
 }
 
-variable "sns_topic_name" {
-  description = "The name of the SNS topic to create"
-  type        = string
-}
-
 variable "sns_topic_kms_key_id" {
   description = "ARN of the KMS key used for enabling SSE on the topic"
   type        = string
