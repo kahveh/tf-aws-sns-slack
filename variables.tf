@@ -80,24 +80,6 @@ variable "sns_topic_feedback_role_force_detach_policies" {
   default     = true
 }
 
-variable "sns_topic_feedback_role_permissions_boundary" {
-  description = "The ARN of the policy that is used to set the permissions boundary for the IAM role used by SNS topic delivery status logging"
-  type        = string
-  default     = null
-}
-
-variable "sns_topic_feedback_role_tags" {
-  description = "A map of tags to assign to IAM the SNS topic feedback role"
-  type        = map(string)
-  default     = {}
-}
-
-variable "sns_topic_lambda_feedback_sample_rate" {
-  description = "The percentage of successful deliveries to log"
-  type        = number
-  default     = 100
-}
-
 variable "slack_webhook_url" {
   description = "The URL of Slack webhook"
   type        = string
@@ -225,12 +207,6 @@ variable "lambda_function_ephemeral_storage_size" {
   description = "Amount of ephemeral storage (/tmp) in MB your Lambda Function can use at runtime. Valid value between 512 MB to 10,240 MB (10 GB)."
   type        = number
   default     = 512
-}
-
-variable "sns_topic_tags" {
-  description = "Additional tags for the SNS topic"
-  type        = map(string)
-  default     = {}
 }
 
 variable "cloudwatch_log_group_tags" {
