@@ -226,3 +226,7 @@ variable "subscription_filter_policy_scope" {
   type        = string
   default     = null
 }
+
+variable "allowed_topics" {
+  default = null
+}

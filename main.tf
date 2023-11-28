@@ -21,6 +21,12 @@ locals {
     resources = [var.kms_key_arn]
   }
 
+  lambda_allowed_triggers = coalesce(var.allowed_topics, {
+    AllowExecutionFromSNS = {
+      principal  = "sns.amazonaws.com"
+      source_arn = local.sns_topic_arn
+    }
+  })
 }
 
 ## SNS
@@ -109,12 +115,7 @@ module "lambda" {
   s3_bucket   = var.lambda_function_s3_bucket
   tags        = merge(var.tags, var.lambda_function_tags)
 
-  allowed_triggers = {
-    AllowExecutionFromSNS = {
-      principal  = "sns.amazonaws.com"
-      source_arn = local.sns_topic_arn
-    }
-  }
+  allowed_triggers = local.lambda_allowed_triggers
 
   depends_on = [aws_cloudwatch_log_group.this]
 }
